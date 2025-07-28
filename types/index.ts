@@ -13,9 +13,12 @@ export interface Task {
     id: string;
     title: string;
     description?: string;
-    status: 'todo' | 'in-progress' | 'done';
-    priority: 'low' | 'medium' | 'high';
+    isDeleted: boolean;
+    isCompleted: boolean;
     dueDate?: Date;
+    priority: string;
+    project?: string;
+    labels: string[];
     createdAt: Date;
     updatedAt: Date;
     userId: string; 

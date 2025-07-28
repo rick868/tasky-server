@@ -33,10 +33,13 @@ model User {
 model Task {
   id            String   @id @default(uuid())
   title         String
-  description   String
+  description   String?
   isDeleted     Boolean  @default(false)
   isCompleted   Boolean @default(false)
   dueDate       DateTime?
+  priority      String   @default("Medium")
+  project       String?
+  labels        String[] @default([])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   userId        String
