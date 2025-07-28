@@ -18,6 +18,15 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' })); 
 app.use(express.urlencoded({ extended: true }));
 
+// Add root-level signin route for frontend compatibility
+app.get('/signin', (req, res) => {
+  res.json({ 
+    message: 'Please use POST /api/auth/login to authenticate',
+    loginEndpoint: '/api/auth/login',
+    registerEndpoint: '/api/auth/register'
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/user', userRoutes);
