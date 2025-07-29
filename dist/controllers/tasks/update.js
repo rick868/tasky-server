@@ -17,7 +17,6 @@ const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const { id } = req.params;
         const { title, description, dueDate, priority, project, labels, isCompleted } = req.body;
         const userId = req.user.userId;
-        // Check if task exists and belongs to user
         const existingTask = yield prisma.task.findFirst({
             where: {
                 id,

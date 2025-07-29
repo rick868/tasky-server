@@ -10,7 +10,6 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
     const { title, description, dueDate, priority, project, labels, isCompleted } = req.body;
     const userId = req.user!.userId;
 
-    // Check if task exists and belongs to user
     const existingTask = await prisma.task.findFirst({
       where: {
         id,

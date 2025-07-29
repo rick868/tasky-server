@@ -12,7 +12,7 @@ const user_1 = __importDefault(require("./routes/user"));
 const app = (0, express_1.default)();
 const prisma = new client_1.PrismaClient();
 app.use((0, cors_1.default)({
-    origin: 'https://tasky-client-s65i.vercel.app/',
+    origin: 'https://tasky-client-ou18.vercel.app/',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
