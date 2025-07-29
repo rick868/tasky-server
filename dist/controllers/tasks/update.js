@@ -15,17 +15,31 @@ const prisma = new client_1.PrismaClient();
 const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const { title, description } = req.body;
+        const { title, description, dueDate, priority, project, labels, isCompleted } = req.body;
         const userId = req.user.userId;
-        const task = yield prisma.task.findFirst({
-            where: { id, userId }
+        // Check if task exists and belongs to user
+        const existingTask = yield prisma.task.findFirst({
+            where: {
+                id,
+                userId,
+                isDeleted: false
+            }
         });
-        if (!task) {
+        if (!existingTask) {
             return res.status(404).json({ error: 'Task not found' });
         }
         const updatedTask = yield prisma.task.update({
             where: { id },
-            data: { title, description }
+            data: {
+                title,
+                description,
+                dueDate: dueDate ? new Date(dueDate) : null,
+                priority,
+                project,
+                labels,
+                isCompleted,
+                updatedAt: new Date()
+            }
         });
         res.json({
             message: 'Task updated successfully',
@@ -33,7 +47,7 @@ const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (error) {
-        console.error('Update task error:', error);
+        console.error('Task update error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

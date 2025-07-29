@@ -14,12 +14,16 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, description } = req.body;
+        const { title, description, dueDate, priority, project, labels } = req.body;
         const userId = req.user.userId;
         const task = yield prisma.task.create({
             data: {
                 title,
                 description,
+                dueDate: dueDate ? new Date(dueDate) : null,
+                priority: priority || 'Medium',
+                project,
+                labels: labels || [],
                 userId
             }
         });
