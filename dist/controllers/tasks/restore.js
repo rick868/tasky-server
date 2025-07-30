@@ -22,11 +22,14 @@ const restoreTask = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!task) {
             return res.status(404).json({ error: 'Deleted task not found' });
         }
-        yield prisma.task.update({
+        const updatedTask = yield prisma.task.update({
             where: { id },
             data: { isDeleted: false }
         });
-        res.json({ message: 'Task restored successfully' });
+        res.json({
+            message: 'Task restored successfully',
+            task: updatedTask
+        });
     }
     catch (error) {
         console.error('Restore task error:', error);

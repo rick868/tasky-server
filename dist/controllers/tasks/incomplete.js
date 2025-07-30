@@ -22,11 +22,14 @@ const incompleteTask = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!task) {
             return res.status(404).json({ error: 'Task not found' });
         }
-        yield prisma.task.update({
+        const updatedTask = yield prisma.task.update({
             where: { id },
             data: { isCompleted: false }
         });
-        res.json({ message: 'Task marked as incomplete' });
+        res.json({
+            message: 'Task marked as incomplete',
+            task: updatedTask
+        });
     }
     catch (error) {
         console.error('Incomplete task error:', error);
