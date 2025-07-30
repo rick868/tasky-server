@@ -17,12 +17,15 @@ export const restoreTask = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: 'Deleted task not found' });
     }
 
-    await prisma.task.update({
+    const updatedTask = await prisma.task.update({
       where: { id },
       data: { isDeleted: false }
     });
 
-    res.json({ message: 'Task restored successfully' });
+    res.json({ 
+      message: 'Task restored successfully',
+      task: updatedTask
+    });
   } catch (error) {
     console.error('Restore task error:', error);
     res.status(500).json({ error: 'Internal server error' });

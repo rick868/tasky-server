@@ -17,12 +17,15 @@ export const incompleteTask = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    await prisma.task.update({
+    const updatedTask = await prisma.task.update({
       where: { id },
       data: { isCompleted: false }
     });
 
-    res.json({ message: 'Task marked as incomplete' });
+    res.json({ 
+      message: 'Task marked as incomplete',
+      task: updatedTask
+    });
   } catch (error) {
     console.error('Incomplete task error:', error);
     res.status(500).json({ error: 'Internal server error' });
